@@ -15,27 +15,27 @@ class SmtpBoard:
     TIMEOUT_SECONDS = 0.010
 
     def rd(self, addr):
-    	message = "R %x\n"%(addr)
-    	self.socket.send(message.encode())
-    	data = None
-    	try:
-    		data = self.socket.recv(self.RECVBUFFERLEN)
-    	except socket.timeout:
-    		pass
-    	data = str(data)[2:][:-3]
-    	data_pieces = data.split(" ")
-    	if data_pieces[0] == "250":
-    		return int(data_pieces[3], 16)
-    	else:
-    		return -1
+        message = "R %x\n"%(addr)
+        self.socket.send(message.encode())
+        data = None
+        try:
+            data = self.socket.recv(self.RECVBUFFERLEN)
+        except socket.timeout:
+            pass
+        data = str(data)[2:][:-3]
+        data_pieces = data.split(" ")
+        if data_pieces[0] == "250":
+            return int(data_pieces[3], 16)
+        else:
+            return -1
 
     # Returns data written on success, otherwise -1
     def wr(self, addr, data):
-    	message = "W %x %x\n"%(addr, data)
-    	self.socket.send(message.encode())
-    	response = self.socket.recv(self.RECVBUFFERLEN)
-    	response_pieces = str(response)[2:][:-3].split(" ")
-    	if response_pieces[0] == "250":
-    		return int(response_pieces[3], 16)
-    	else:
-    		return -1
+        message = "W %x %x\n"%(addr, data)
+        self.socket.send(message.encode())
+        response = self.socket.recv(self.RECVBUFFERLEN)
+        response_pieces = str(response)[2:][:-3].split(" ")
+        if response_pieces[0] == "250":
+            return int(response_pieces[3], 16)
+        else:
+            return -1

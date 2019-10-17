@@ -4,13 +4,14 @@ class Register:
     def __init__(self,
                  addr,
                  smtp_board,
+                 refresh_rate = 1,
                  name = "unnamed",
                  v5 = False,
-                 format_method = None,
-                 refresh_rate = 1):
+                 format_method = None):
         self.name = name
         self.addr = addr
         self.board = smtp_board
+        self.refresh_rate = refresh_rate
         if v5:
             self.read_method = Register.read_s6
             self.write_method = Register.write_s6
@@ -60,15 +61,9 @@ class Register:
         d = self.data
         return "%02d:%02d:%02d"%(d/3600, (d%3600)/60, d%60)
 
-test_board = SmtpBoard()
-reg1 = Register(0x1000, test_board, v5 = True)
-reg2 = Register(0x1000, test_board, v5 = False, format_method = Register.format_time)
+    def update(self, curr_time):
+        if (curr_time % self.refresh_rate) == 0:
+            self.rd()
 
-print(reg1.wr(0x1))
-print(reg2.wr(0xbeef))
-
-print("reg1 %x"%(reg1.rd()))
-print("reg2 %x"%(reg2.rd()))
-
-print(reg1.rfmt())
-print(reg2.rfmt())
+            # for testing
+            print("Updated: %04x"%(self.addr))
