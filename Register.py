@@ -66,4 +66,4 @@ class Register:
             self.rd()
 
             # for testing
-            print("Updated: %04x"%(self.addr))
+            print("Updated: %04x %04x"%(self.addr, self.data))

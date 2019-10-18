@@ -22,10 +22,10 @@ class SmtpBoard:
             data = self.socket.recv(self.RECVBUFFERLEN)
         except socket.timeout:
             pass
-        data = str(data)[2:][:-3]
+        data = str(data)
         data_pieces = data.split(" ")
-        if data_pieces[0] == "250":
-            return int(data_pieces[3], 16)
+	if data_pieces[0] == "250":
+	    return int(data_pieces[3], 16)
         else:
             return -1
 
