@@ -1,9 +1,9 @@
 import socket
 
 class SmtpBoard:
-    def __init__(self, addr = "127.0.0.1"):
+    def __init__(self, addr = "127.0.0.1", port = 31415):
         self.addr = addr
-        self.port = 31415
+        self.port = port
 
         # use TCP for board I/O
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

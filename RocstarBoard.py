@@ -3,8 +3,8 @@ from Register import Register
 from RegisterBoard import RegisterBoard
 
 class RocstarBoard(RegisterBoard):
-	def __init__(self, addr = "127.0.0.1"):
-		smtp_board = SmtpBoard(addr)
+	def __init__(self, addr = "127.0.0.1", port = 31415):
+		smtp_board = SmtpBoard(addr, port)
 		self.smtp_board = smtp_board
 		RegisterBoard.__init__(self, smtp_board, "Rocstar")
 
