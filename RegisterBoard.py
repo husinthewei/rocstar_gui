@@ -33,6 +33,7 @@ class RegisterBoard:
         group = self.register_groups.get(group_name, [])
         for register in group:
             register.update(self.uptime)
+            print(register.rfmt())
 
     def OnTimer(self):
         self.uptime += 1
