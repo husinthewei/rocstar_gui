@@ -5,8 +5,8 @@ class Register:
                  addr,
                  smtp_board,
                  refresh_rate = 1,
-                 name = "unnamed",
                  v5 = False,
+                 name = "unnamed",
                  format_method = None):
         self.name = name
         self.addr = addr
