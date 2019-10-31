@@ -5,14 +5,14 @@ class Register:
                  addr,
                  smtp_board,
                  refresh_rate = 1,
-                 v5 = False,
+                 s6 = False,
                  name = "unnamed",
                  format_method = None):
         self.name = name
         self.addr = addr
         self.board = smtp_board
         self.refresh_rate = refresh_rate
-        if v5:
+        if s6:
             self.read_method = Register.read_s6
             self.write_method = Register.write_s6
         else:
