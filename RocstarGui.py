@@ -87,22 +87,6 @@ class ConfigStatsPanel(StatsPanel):
         ast("uzed")
         self.SetSizer(self.sizer)
 
-class ScrollTab(scrolled.ScrolledPanel):
-    def __init__(self, parent):
-
-        scrolled.ScrolledPanel.__init__(self, parent, style=wx.VSCROLL)
-
-        vbox = wx.BoxSizer(wx.HORIZONTAL)
-
-        desc = wx.StaticText(self, -1, text)
-
-        vbox.Add(desc, 0, wx.ALIGN_LEFT | wx.ALL, 5)
-        vbox.Add(wx.StaticLine(self, -1, size=(1024, -1)), 0, wx.ALL, 5)
-        vbox.Add((20, 20))
-
-        self.SetSizer(vbox)
-        self.SetupScrolling()
-
 class GraphTab(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
@@ -121,7 +105,7 @@ class GraphTab(wx.Panel):
 
 class MainFrame(wx.Frame):
     def __init__(self, rocstar_board):
-        wx.Frame.__init__(self, None, title="testGUI", size=(700,700))
+        wx.Frame.__init__(self, None, title="Rocstar", size=(700,700))
 
         # Create a panel and notebook (tabs holder)
         p = wx.Panel(self)
@@ -134,7 +118,7 @@ class MainFrame(wx.Frame):
         tab4 = LogPanel(nb)
         tab5 = LogPanel(nb)
 
-        self.logpanel = tab4
+        self.logpanel1 = tab4
         self.logpanel2 = tab5
 
         # Add the windows to tabs and name them.
@@ -154,7 +138,7 @@ if __name__ == "__main__":
     #board = RocstarBoard("192.168.1.45", 2525)
     rocstar_board = None
     frame = MainFrame(rocstar_board)
-    redir = RedirectText(frame.logpanel.log)
+    redir = RedirectText(frame.logpanel1.log)
     sys.stdout = redir
     redir = RedirectText(frame.logpanel2.log)
     sys.stderr = redir
