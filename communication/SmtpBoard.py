@@ -18,14 +18,17 @@ class SmtpBoard:
         message = "R %x\n"%(addr)
         self.socket.send(message.encode())
         data = None
-        try:
-            data = self.socket.recv(self.RECVBUFFERLEN)
-        except socket.timeout:
-            pass
+
+        while (data == None):
+            try:
+                data = self.socket.recv(self.RECVBUFFERLEN)
+            except socket.timeout:
+                pass
+
         data = str(data)
         data_pieces = data.split(" ")
-        if data_pieces[0] == "250":
-            return int(data_pieces[3], 16)
+        if data_pieces[0] == "250" and int(data_pieces[2], 16) == addr:
+                return int(data_pieces[3].split("\n")[0], 16)
         else:
             return -1
 

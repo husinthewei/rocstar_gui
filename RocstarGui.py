@@ -75,6 +75,10 @@ class BasicStatsPanel(StatsPanel):
         arl = self.ARL
         ast("Rocstar")
         ast("uzed")
+        ast("Beef: ")
+        arl(rocstar_board.beef_reg)
+        ast("uzed Uptime:")
+        arl(rocstar_board.uzed_uptime)
         self.SetSizer(self.sizer)
 
 class ConfigStatsPanel(StatsPanel):
@@ -106,10 +110,17 @@ class GraphTab(wx.Panel):
 class MainFrame(wx.Frame):
     def __init__(self, rocstar_board):
         wx.Frame.__init__(self, None, title="Rocstar", size=(700,700))
+        self.rocstar_board = rocstar_board
 
         # Create a panel and notebook (tabs holder)
         p = wx.Panel(self)
         nb = wx.Notebook(p)
+        self.nb = nb
+
+        # Register Groups
+        self.register_groups = {}
+        self.register_groups[0] = "BasicStats"
+        self.register_groups[1] = "Config"
 
         # Create the tab windows
         tab1 = BasicStatsPanel(nb, rocstar_board, "BasicStats")
@@ -128,15 +139,24 @@ class MainFrame(wx.Frame):
         nb.AddPage(tab4, "com")
         nb.AddPage(tab5, "stderr")
 
+        rocstar_board.set_selected_reg_group("BasicStats")
+
         # Set noteboook in a sizer to create the layout
         sizer = wx.BoxSizer()
         sizer.Add(nb, 1, wx.EXPAND)
         p.SetSizer(sizer)
 
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.OnTimer, self.timer)
+        self.timer.Start(1000)
+    
+    def OnTimer(self, e):
+        group = self.register_groups.get(self.nb.GetSelection(), "")
+    	self.rocstar_board.update(group)
+
 if __name__ == "__main__":
     app = wx.App()
-    #board = RocstarBoard("192.168.1.45", 2525)
-    rocstar_board = None
+    rocstar_board = RocstarBoard("192.168.1.45", 2525)
     frame = MainFrame(rocstar_board)
     redir = RedirectText(frame.logpanel1.log)
     sys.stdout = redir

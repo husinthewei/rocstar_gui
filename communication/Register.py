@@ -62,8 +62,5 @@ class Register:
         return "%02d:%02d:%02d"%(d/3600, (d%3600)/60, d%60)
 
     def update(self, curr_time):
-        if (curr_time % self.refresh_rate) == 0:
+        if (curr_time % self.refresh_rate) == 0 or curr_time < 2:
             self.rd()
-
-            # for testing
-            print("Updated: %04x %04x"%(self.addr, self.data))

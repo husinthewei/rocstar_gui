@@ -17,9 +17,11 @@ class RegisterGroup:
     def get_registers(self):
         return self.registers.keys()
 
-    def update_gui():
-        for reg, label in self.registers.items:
-            pass
+    def update_gui(self):
+        for reg, label in self.registers.items():
+            if label:
+                text = reg.rfmt() if reg.data else "??"  
+                label.SetLabel(text)
 
 class RegisterBoard:
     def __init__(self,
@@ -37,8 +39,6 @@ class RegisterBoard:
 
         # Timing logic
         self.uptime = 0
-        self.timer = threading.Timer(1.0, self.OnTimer)
-        self.timer.start()
 
     def set_selected_reg_group(self, group):
         self.selected_group = group
@@ -69,9 +69,8 @@ class RegisterBoard:
             return
         group.update_gui()
 
-    def OnTimer(self):
+    def update(self, register_group):
         self.uptime += 1
+        self.selected_group = register_group
         self.update_values()
         self.update_gui()
-        self.timer = threading.Timer(1.0, self.OnTimer)
-        self.timer.start()

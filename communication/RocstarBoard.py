@@ -16,7 +16,7 @@ class RocstarBoard(RegisterBoard):
         self.a7_cfg_program = Register(0x0004, smtp_board, 5)
         self.a7_cfg = Register(0x0005, smtp_board, 5)
         self.num_reg_2 = Register(0x0007, smtp_board, 10)
-        self.uzed_uptime = Register(0x0008, smtp_board, 1)
+        self.uzed_uptime = Register(0x0008, smtp_board, 1, format_method=Register.format_time)
         self.count_reg = Register(0x0009, smtp_board, 1);
         self.fw_yyyy = Register(0x0010, smtp_board, 60)
         self.fw_mmdd = Register(0x0011, smtp_board, 60)
