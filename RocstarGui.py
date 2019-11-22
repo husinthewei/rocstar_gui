@@ -123,8 +123,8 @@ class MainFrame(wx.Frame):
         self.register_groups[1] = "Config"
 
         # Create the tab windows
-        tab1 = BasicStatsPanel(nb, rocstar_board, "BasicStats")
-        tab2 = ConfigStatsPanel(nb, rocstar_board, "Config")
+        tab1 = BasicStatsPanel(nb, rocstar_board, register_groups[0])
+        tab2 = ConfigStatsPanel(nb, rocstar_board, register_groups[1])
         tab3 = GraphTab(nb)
         tab4 = LogPanel(nb)
         tab5 = LogPanel(nb)
@@ -136,7 +136,7 @@ class MainFrame(wx.Frame):
         nb.AddPage(tab1, "Basic stats")
         nb.AddPage(tab2, "Config")
         nb.AddPage(tab3, "Graph")
-        nb.AddPage(tab4, "com")
+        nb.AddPage(tab4, "stdout")
         nb.AddPage(tab5, "stderr")
 
         rocstar_board.set_selected_reg_group("BasicStats")
@@ -152,7 +152,7 @@ class MainFrame(wx.Frame):
     
     def OnTimer(self, e):
         group = self.register_groups.get(self.nb.GetSelection(), "")
-    	self.rocstar_board.update(group)
+        self.rocstar_board.update(group)
 
 if __name__ == "__main__":
     app = wx.App()
