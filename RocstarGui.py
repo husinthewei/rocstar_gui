@@ -122,6 +122,7 @@ class MainFrame(wx.Frame):
         self.register_groups[0] = "BasicStats"
         self.register_groups[1] = "Config"
 
+        register_groups = self.register_groups
         # Create the tab windows
         tab1 = BasicStatsPanel(nb, rocstar_board, register_groups[0])
         tab2 = ConfigStatsPanel(nb, rocstar_board, register_groups[1])
