@@ -150,7 +150,7 @@ class MainFrame(wx.Frame):
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.OnTimer, self.timer)
         self.timer.Start(1000)
-    
+
     def OnTimer(self, e):
         group = self.register_groups.get(self.nb.GetSelection(), "")
         self.rocstar_board.update(group)

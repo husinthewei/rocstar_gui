@@ -25,10 +25,10 @@ class SmtpBoard:
             except socket.timeout:
                 pass
 
-        data = str(data)
+        data = str(data.decode())
         data_pieces = data.split(" ")
         if data_pieces[0] == "250" and int(data_pieces[2], 16) == addr:
-                return int(data_pieces[3].split("\n")[0], 16)
+            return int(data_pieces[3].split("\n")[0], 16)
         else:
             return -1
 
